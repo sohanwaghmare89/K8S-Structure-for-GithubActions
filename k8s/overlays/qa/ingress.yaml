@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: My-app-BE-FE
+  namespace: my-namespace
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: api.mywebsite.com/ui.mywebsite.com
+    nginx.ingress.kubernetes.io/proxy-body-size: "1g"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.mywebsite.com/ui.mywebsite.com
+    secretName: qa-mywebsite-tls
+  rules:
+  - host: api.mywebsite.com/ui.mywebsite.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: My-app-BE-FE
+            port:
+              number: 80
