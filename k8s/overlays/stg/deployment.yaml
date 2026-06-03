@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: My-app-BE-FE
+  namespace: my-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: My-app-BE-FE
+  template:
+    metadata:
+      labels:
+        app: My-app-BE-FE
+    spec:
+      serviceAccountName: my-namespace-sa
+      containers:
+        - name: My-app-BE-FE
+          image: My-app-BE-FE
+          imagePullPolicy: Always
+          env:
+            - name: AZURE_CLIENT_ID
+              value: "09c4371a-04d2-*******************"
+          volumeMounts:
+            - name: secrets
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: my-secrets
