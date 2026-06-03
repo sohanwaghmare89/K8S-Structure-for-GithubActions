@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: My-app-BE-FE
+  namespace: my-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: My-app-BE-FE
+  template:
+    metadata:
+      labels:
+        app: My-app-BE-FE
+    spec:
+      serviceAccountName: my-namespace-sa
+      containers:
+        - name: My-app-BE-FE
+          image: My-app-BE-FE
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 3000
+
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1Gi
+              cpu: 500m

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: My-app-BE-FE
+  namespace: my-namespace
+spec:
+  # selector tells Kubernetes what Deployment this Service
+  # belongs to
+  selector:
+    app: My-app-BE-FE
+  ports:
+  - port: 80
+    name: http-port
+    targetPort: 3000
