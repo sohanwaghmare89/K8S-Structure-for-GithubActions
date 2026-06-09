@@ -7,7 +7,7 @@ env:
   NEXT_PUBLIC_APP_ENV: 'stg'
   AKS_RESOURCE_GROUP: my-stg-apps-rg
   AKS_CLUSTER_NAME: my-stg-aks
-  ENV: 'qa'
+  ENV: 'stg'
 
 jobs:
   build-push-and-deploy-qa-azure:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: 'qa'    # hardcoded
+          ref: 'stg'    # hardcoded
 
       - name: Azure Login
         uses: azure/login@v2
